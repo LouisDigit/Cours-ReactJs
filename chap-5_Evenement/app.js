@@ -55,6 +55,9 @@ class Incrementer extends React.Component {
   constructor(props) {
     super(props);
     this.state = { number: props.start, timer: null };
+    this.toggle = this.toggle.bind(this);
+    this.reinit = this.reinit.bind(this);
+    
   }
 
   componentDidMount() {
@@ -62,7 +65,7 @@ class Incrementer extends React.Component {
   }
 
   componentWillUnmount(e) {
-    this.pause();
+    window.clearInterval(this.state.timer);
   }
 
   increment() {
@@ -82,12 +85,28 @@ class Incrementer extends React.Component {
     });
   }
 
+  label() {
+    return this.state.timer ? 'Pause' : 'Lecture';
+  }
+
+  toggle() {
+    return this.state.timer ? this.pause() : this.play();
+  }
+
+  reinit() {
+    this.pause();
+    this.play();
+    this.setState({
+      number:0
+    })
+  }
+
   render() {
     return (
       <div>
         Valeur : {this.state.number}{" "}
-        <button onClick={this.pause.bind(this)}>Pause</button>
-        <button onClick={this.play.bind(this)}>Play</button>
+        <button onClick={this.toggle}>{this.label()}</button>
+        <button onClick={this.reinit}>Reinit</button>
       </div>
     );
   }
