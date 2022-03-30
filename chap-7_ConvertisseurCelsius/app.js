@@ -54,13 +54,8 @@ class Calculator extends React.Component {
     this.state = {
       temperature: "20",
     };
-    this.handleTemperatureChange = this.handleTemperatureChange.bind(this);
     this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
     this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
-  }
-
-  handleTemperatureChange(temperature) {
-    this.setState({ temperature });
   }
 
   handleCelsiusChange(temperature) {
@@ -80,9 +75,13 @@ class Calculator extends React.Component {
         <TemperatureInput
           scale="c"
           temperature={celsius}
-          onTemperatureChange={this.handleTemperatureChange}
+          onTemperatureChange={this.handleCelsiusChange}
         />
-        <TemperatureInput scale="f" temperature={fahrenheit} />
+        <TemperatureInput
+          scale="f"
+          temperature={fahrenheit}
+          onTemperatureChange={this.handleFahrenheitChange}
+        />
         <BoilingVerdict celsius={parseFloat(temperature)} />
       </div>
     );
